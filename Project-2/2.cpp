@@ -1,153 +1,153 @@
-#include<iostream>
-#include<string.h>
+#include <iostream>
+#include<conio.h>
+#include <string.h>
 using namespace std;
 
 int getInt();
 void manager();
 int searchData();
 
-
-typedef class SuperMarketBillingSystem
+typedef class Super
 {
-	private : 
-		int cId, item_n, quantity, price, discount;
-		char item_name[15];
-	
-	public : 
-		// Setter 
-		void setData()
-		{
-			cout << endl
-				 << "\tCustomer Id : ";
-			this->cId = getInt();
-				
-			cout << "\tTotal Number of Item : ";
-			this->item_n = getInt();
-				
-			fflush(stdin);
-			cout << endl
-				 << "\t\tItem Name : ";
-			gets(this->item_name);
-					
-			cout << "\t\t\tQuantity : ";
-			this->quantity = getInt();
-					
-			cout << "\t\t\tPrice : ";
-			this->price = getInt();
-			
-			cout << endl;
-		}
-		
-		void setDataHeading()
-		{
-			cout << endl << "\t---Enter Given Data---" << endl;
-		}
-		
-		void getDataHeading()
-		{
-			cout << endl << "\t---Customer Data---" << endl;
-		}
-		
-		// Getter 
-		void getData()
-		{			
-			cout << endl
-				 << "\tCustomer Id : " << this->cId << endl
-				 << "\tTotal Number of Item : " << this->item_n;
-					 
-			cout << endl
-				 << "\t\tItem Name : " << this->item_name
-				 << "\t\t\tQuantity : " << this->quantity
-				 << "\t\t\tPrice : " << this->price ;
-		}
-		
-	friend void manager();
-} SMBS;
+private:
+	int itemNum, quantity, price, total_Price;
+	float bill = 0;
+	char itemName[10];
 
+public:
+	// Setter
+	void setData()
+	{
+		cout << endl
+			 << "Enter Item Number : ";
+		this->itemNum = getInt();
+
+		fflush(stdin);
+		cout << "Enter Item Name : ";
+		gets(this->itemName);
+
+		cout << "Enter Item quantity : ";
+		this->quantity = getInt();
+
+		cout << "Enter Item Price : ";
+		this->price = getInt();
+
+		this->total_Price = (this->price * this->quantity);
+		bill = ((float)total_Price)*0.20;
+		bill = total_Price - bill;
+	}
+
+	// Getter
+	void getData()
+	{
+		cout << endl
+			 << this->itemNum << "\t\t" << this->itemName << "\t\t" << this->quantity << "\t\t" << this->price << "\t" << this->total_Price
+			 << endl;
+	}
+
+	void getHeading()
+	{
+		cout << endl
+			 << "Item Number\tItem Name\tQuantity\tPrice\tTotal_Price" << endl
+			 << "----------\t---------\t--------\t-----\t----------" << endl;
+	}
+	
+	void getEnding()
+	{
+		cout << endl 
+			 << "----------------------------------------------------------------------" << endl;
+	}
+	
+	void getBill()
+	{
+		cout << "Your Total Bill is : " << this->bill << endl;
+	}
+	
+	friend void manager();
+	friend void searchData(Super t, int num);
+};
 
 typedef class UserData
 {
-	protected :
-		int id, i, lwr=0, space=0, sym=0, digit=0, id1;
-		char pass1[30], pass[30];
+	private:
+		int id, id1, i, lwr = 0, space = 0, sym = 0, digit = 0;
+		char pass[20], pass1[20];
 	
-	public : 
+	public:
+		// Sign Up Data
+		void signUp()
+		{
+		h1:
+			cout << endl
+				 << "Sign Up Your Account" << endl
+				 << "Your Id : ";
+			this->id = getInt();
 	
-		// Setter
-		void setSignUP()
+			fflush(stdin);
+			cout << "Your PassWord : ";
+			gets(this->pass);
+		}
+	
+		// Check Passowrd
+		void checkPassword()
+		{
+		h1:
+			for (i = 0; i < strlen(this->pass); i++)
+			{
+				if (this->pass[i] >= 97 && this->pass[i] <= 122)
+					this->lwr++;
+				else if (this->pass[i] == 32)
+					this->space++;
+				else if (this->pass[i] >= 48 && this->pass[i] <= 57)
+					this->digit++;
+				else
+					this->sym++;
+			}
+	
+			if (this->lwr > 0 && this->space == 0 && this->digit > 0 && this->sym > 0 && strlen(this->pass) > 8)
+			{
+				cout << endl
+					 << "YOUR HAVE SIGN UP YOUR ACCOUNT" << endl;
+				goto h2;
+			}
+			else
+			{
+				cout << "YOUR PASSWORD IS WRONG PLEASE SIGN UP AGAIN" << endl
+					 << endl;
+				goto h3;
+				//				signUp();
+			}
+	
+		h3:
+			fflush(stdin);
+			cout << "Your PassWord : ";
+			gets(this->pass);
+			goto h1;
+	
+		h2:
+			cout << endl;
+		}
+	
+		// Login Account
+		void loginAccount()
 		{
 			cout << endl
-				 << "\t---PLEASE SIGN UP FIRST---" << endl << endl;
-			cout << "1) Enter User Id : ";
-			this->id = getInt();
-			
+				 << "Login Your Account" << endl
+				 << "Your Id : ";
+			this->id1 = getInt();
+	
 			fflush(stdin);
-			cout << "2) Enter Your Password : ";
-			gets(this->pass);	
-				
+			cout << "Yout Password : ";
+			gets(this->pass1);
 		}
-	
-	
-		void DataCheck()
-		{
-			for(i=0; i<strlen(this->pass); i++)
-			{
-				if(pass[i] >=97 && pass[i] <= 122)
-					lwr++;
-				else if(pass[i] == 32)
-					space++;
-				else if(pass[i] >=48 && pass[i] <= 57)
-					digit++;
-				else
-					sym++;
-			}
-		
-			if( lwr>0 && space==0 && digit>0  && sym>0 )					
-				cout << "You Have make Your Account " << endl;
-			else
-			{
-				cout << "YOUR PASSWORD IS WRONG PLEASE SIGN UP AGAIN" << endl << endl;
-				
-				setSignUP();
-			}
-		}
-		
-		void loginData()
-		{
-			h2:
-			cout << endl << endl << "\t---PLEASE LOGIN TO YOUR ACCOUNT---" << endl;
-			cout << "1) Enter Your Id : ";
-			id1 = getInt();
-				
-			fflush(stdin);
-			cout << "2) Enter Your Password : ";
-			gets(pass1);
-				
-			if(strcmp(pass,pass1) == 0 && (id1 == id) )
-			{
-				system("cls");
-				
-				cout << endl 
-					 << "\t---YOU HAVE LOGIN YOUR ACCOUNT---" << endl << endl
-					 << "\t--PRESS ANY KEY TO GENERATE BILL--" << endl << endl;
-				
-				getchar();
-			}
-			else
-				goto h2;
-		}
-	
 	friend void manager();
-} UD;
-
-
-
+} ud;
 
 int main()
 {
 	manager();
+	return 0;
 }
-
 
 int getInt()
 {
@@ -156,56 +156,53 @@ int getInt()
 	return n;
 }
 
-
 void manager()
-{	
-	UD d1;
-	
-	d1.setSignUP();
-	d1.DataCheck();
-	
-	cout << endl << "Enter Number of customer  : ";
-	int n = getInt();
-	
-	SMBS a[n];
-	
-	a[0].setDataHeading();
-	for(int i=0; i<n; i++)
-	{
-		a[i].setData();
-	}
-	
-	a[0].getDataHeading();
-	for(int i=0; i<n; i++)
-	{
-		a[i].getData();
-	}
-	
-	d1.loginData();
-	
-	if( (d1.id == d1.id1) && (strcmp(d1.pass,d1.pass1) == 0))
-	{
-		int n1 = searchData();	
-	
-		a[0].getDataHeading();
-		for(int i=0; i<n; i++)
-		{
-			if(a[i].cId == n1)
-			{
-				a[i].getData();
-			}
-		}	
-	}
-	
-}
-
-int searchData()
 {
-	cout << "Enter Customer id : ";
+	ud a1;
+	cout << "Enter Total Number Of item : ";
 	int n = getInt();
 	
+	Super s[n];
+
+	a1.signUp();
+	a1.checkPassword();
+
+	for(int i=0; i<n; i++)
+	{
+		s[i].setData();
+	}
+	
+	s[0].getHeading();
+	
+	
+	for(int i=0; i<n; i++)
+	{
+		s[i].getData();	
+	}
+	
+	getch();
 	system("cls");
-	return n;
+
+	a1.loginAccount();
+	
+	cout << "Enter item Number : ";
+	int num = getInt();
+	
+	s[0].getHeading();
+	for(int i=0; i<n; i++)
+	{
+		searchData(s[i],num);
+	}
+	
 	
 }
 
+void searchData(Super t, int n)
+{
+	if(t.itemNum == n)
+	{
+		t.getData();
+		t.getEnding();
+		t.getBill();
+	}
+}
