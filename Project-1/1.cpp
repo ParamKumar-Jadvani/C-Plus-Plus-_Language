@@ -31,8 +31,8 @@ int main()
 
 	if (h3.inch >= 12)
 	{
-		h3.inch /= 12;
-		h3.feet++;
+		h3.feet = h3.inch / 12;
+		h3.inch %= 12;
 	}
 
 	cout << h3.feet << "  " << h3.inch;
